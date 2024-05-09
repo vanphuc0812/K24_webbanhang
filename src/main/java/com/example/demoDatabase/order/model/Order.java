@@ -7,12 +7,15 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 @Entity
 @Table(name = OrderEntity.TABLE_NAME)
 public class Order extends BaseEntity {
@@ -29,5 +32,5 @@ public class Order extends BaseEntity {
             joinColumns = @JoinColumn(name = OrderEntity.OrderProduct.ORDER_ID),
             inverseJoinColumns = @JoinColumn(name = OrderEntity.OrderProduct.PRODUCT_ID)
     )
-    private Set<Product> products;
+    private Set<Product> products = new HashSet<>();
 }

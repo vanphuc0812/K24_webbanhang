@@ -10,11 +10,14 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
 @Entity
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = ProductEntity.TABLE_NAME)
@@ -27,5 +30,5 @@ public class Product extends BaseEntity {
     private Double price;
 
     @ManyToMany(mappedBy = OrderEntity.OrderProduct.ORDER_MAPPED_PRODUCT)
-    private Set<Order> orders;
+    private Set<Order> orders = new HashSet<>();
 }

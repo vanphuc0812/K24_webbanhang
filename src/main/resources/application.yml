@@ -21,3 +21,10 @@ springdoc:
   swagger-ui:
     path: swagger-ui.html
     operations-sorter: method
+
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+    hibernate: ERROR
