@@ -1,11 +1,11 @@
 package com.example.demoDatabase.common.service;
 
+import com.example.demoDatabase.common.exception.WBHBussinessExeption;
 import com.example.demoDatabase.common.model.BaseEntity;
 import com.example.demoDatabase.common.util.WBHMapper;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface GenericService<T extends BaseEntity, D, I> {
     JpaRepository<T, I> getRepository();
@@ -18,13 +18,12 @@ public interface GenericService<T extends BaseEntity, D, I> {
         ).toList();
     }
 
-    default Optional<D> findById(I id, Class<D> clazzDTO) {
-        D dto = null;
-        Optional<T> model = getRepository().findById(id);
-        if (model.isPresent()) {
-            dto = getMapper().map(model.get(), clazzDTO);
-        }
-        return Optional.of(dto);
+    default D findById(I id, Class<D> clazzDTO) {
+        T model = getRepository().findById(id)
+                .orElseThrow(() -> new WBHBussinessExeption("Entity with id not found"));
+
+        return getMapper().map(model, clazzDTO);
+
     }
 
     default D save(D dto, Class<T> clazzModel, Class<D> clazzDTO) {
@@ -33,10 +32,9 @@ public interface GenericService<T extends BaseEntity, D, I> {
     }
 
     default void delete(I id) {
-        Optional<T> model = getRepository().findById(id);
-        if (model.isPresent()) {
-            getRepository().delete(model.get());
-        }
+        T entity = getRepository().findById(id)
+                .orElseThrow(() -> new WBHBussinessExeption("Entity to delete not found"));
+        getRepository().delete(entity);
     }
 
     default T update(T model) {

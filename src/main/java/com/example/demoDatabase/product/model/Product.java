@@ -1,21 +1,20 @@
 package com.example.demoDatabase.product.model;
 
 import com.example.demoDatabase.common.model.BaseEntity;
-import com.example.demoDatabase.order.model.Order;
 import com.example.demoDatabase.order.model.OrderEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import com.example.demoDatabase.order.model.OrderProduct;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
 @SuperBuilder
 @NoArgsConstructor
@@ -29,6 +28,9 @@ public class Product extends BaseEntity {
     @Column(name = ProductEntity.PRICE)
     private Double price;
 
-    @ManyToMany(mappedBy = OrderEntity.OrderProduct.ORDER_MAPPED_PRODUCT)
-    private Set<Order> orders = new HashSet<>();
+    @OneToMany(mappedBy = OrderEntity.OrderProduct.PRODUCT_MAPPED_ORDERPRODUCT,
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Set<OrderProduct> orderProducts = new HashSet<>();
+
+
 }

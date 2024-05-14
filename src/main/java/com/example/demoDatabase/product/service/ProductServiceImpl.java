@@ -1,6 +1,8 @@
 package com.example.demoDatabase.product.service;
 
 import com.example.demoDatabase.common.util.WBHMapper;
+import com.example.demoDatabase.product.dto.ProductDTO;
+import com.example.demoDatabase.product.dto.ProductDTOForSave;
 import com.example.demoDatabase.product.model.Product;
 import com.example.demoDatabase.product.repository.ProductRepository;
 import jakarta.transaction.Transactional;
@@ -28,5 +30,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public WBHMapper getMapper() {
         return mapper;
+    }
+
+    @Override
+    public ProductDTO save(ProductDTOForSave productDTO) {
+        Product product = productRepository.save(mapper.map(productDTO, Product.class));
+        return mapper.map(product, ProductDTO.class);
     }
 }

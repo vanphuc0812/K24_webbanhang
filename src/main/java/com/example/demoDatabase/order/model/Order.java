@@ -1,18 +1,20 @@
 package com.example.demoDatabase.order.model;
 
 import com.example.demoDatabase.common.model.BaseEntity;
-import com.example.demoDatabase.product.model.Product;
 import com.example.demoDatabase.user.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
@@ -26,11 +28,8 @@ public class Order extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = OrderEntity.OrderUser.USER_ID)
     )
     private User user;
-    @ManyToMany
-    @JoinTable(
-            name = OrderEntity.OrderProduct.TABLE_NAME,
-            joinColumns = @JoinColumn(name = OrderEntity.OrderProduct.ORDER_ID),
-            inverseJoinColumns = @JoinColumn(name = OrderEntity.OrderProduct.PRODUCT_ID)
-    )
-    private Set<Product> products = new HashSet<>();
+    @OneToMany(mappedBy = OrderEntity.OrderProduct.ORDER_MAPPED_ORDERPRODUCT
+            , cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Set<OrderProduct> orderProducts = new HashSet<>();
+    private BigDecimal totalPrice;
 }

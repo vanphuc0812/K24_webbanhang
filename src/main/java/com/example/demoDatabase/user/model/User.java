@@ -8,8 +8,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -18,7 +19,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Component
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = UserEntity.TABLE_NAME)
 public class User extends BaseEntity {
