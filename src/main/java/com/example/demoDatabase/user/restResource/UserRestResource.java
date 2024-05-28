@@ -19,7 +19,7 @@ public class UserRestResource {
         this.userService = userService;
     }
 
-    @PostMapping("/register")
+    @PostMapping("/auth/register")
     public Object register(@RequestBody @Valid UserDTOForSave user) {
         return ResponseUtil.get(userService.save(user), HttpStatus.OK);
     }

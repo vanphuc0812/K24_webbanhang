@@ -26,4 +26,5 @@ public class UserDTOForSave {
     private String password;
     private int age;
     private String gender;
+    private String roles;
 }

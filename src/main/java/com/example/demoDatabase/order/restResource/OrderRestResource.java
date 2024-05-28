@@ -5,6 +5,7 @@ import com.example.demoDatabase.order.dto.OrderDTO;
 import com.example.demoDatabase.order.dto.OrderDTOForSave;
 import com.example.demoDatabase.order.service.OrderService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -19,7 +20,9 @@ public class OrderRestResource {
         this.orderService = orderService;
     }
 
+
     @GetMapping("/findAll")
+    @PreAuthorize("hasAuthority('WBH_ADMIN')")
     public Object findAll() {
         return ResponseUtil.get(orderService.findAll(OrderDTO.class), HttpStatus.OK);
     }
@@ -29,7 +32,9 @@ public class OrderRestResource {
         return ResponseUtil.get(orderService.findById(id, OrderDTO.class), HttpStatus.OK);
     }
 
+
     @GetMapping("/findByUsername")
+    @PreAuthorize("hasAuthority('WBH_USER')")
     public Object findByUsername(@RequestParam String username) {
         return ResponseUtil.get(orderService.findByUsername(username), HttpStatus.OK);
     }

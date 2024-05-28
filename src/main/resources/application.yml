@@ -16,7 +16,10 @@ spring:
         jdbc:
           time_zone: UTC+7
       dialect: org.hibernate.dialect.PostgreSQLDialect
-
+  security:
+    user:
+      name: admin
+      password: 1234
 springdoc:
   swagger-ui:
     path: swagger-ui.html

@@ -12,4 +12,6 @@ public interface UserService extends GenericService<User, UserDTO, UUID> {
     UserDTO save(UserDTOForSave userDto);
 
     Optional<User> findByUsername(String username);
+
+    UserDTO login(String username, String password);
 }

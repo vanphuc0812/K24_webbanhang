@@ -32,6 +32,8 @@ public class User extends BaseEntity {
     private int age;
     @Column(name = UserEntity.GENDER)
     private String gender;
+    @Column(name = UserEntity.ROLES)
+    private String roles;
 
     @OneToMany(mappedBy = OrderEntity.OrderUser.ORDER_MAPPED_USER)
     private Set<Order> orders = new HashSet<>();
