@@ -48,9 +48,10 @@ public class SecurityConfig {
 //                .addFilterBefore()
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .requestMatchers("/user/auth/register").permitAll()
+                        .requestMatchers("/user/**").permitAll()
                         .requestMatchers("/product/**").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/file/**").permitAll()
+                        .anyRequest().permitAll()
                 )
                 .formLogin(Customizer.withDefaults())
                 // create UsernamePasswordAuthenticationToken

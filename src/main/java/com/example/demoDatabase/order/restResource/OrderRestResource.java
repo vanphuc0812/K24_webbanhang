@@ -34,7 +34,7 @@ public class OrderRestResource {
 
 
     @GetMapping("/findByUsername")
-    @PreAuthorize("hasAuthority('WBH_USER')")
+    @PreAuthorize("hasAuthority('WBH_USER')") // userDetail.getAuthorities().contains("WBH_USER")
     public Object findByUsername(@RequestParam String username) {
         return ResponseUtil.get(orderService.findByUsername(username), HttpStatus.OK);
     }

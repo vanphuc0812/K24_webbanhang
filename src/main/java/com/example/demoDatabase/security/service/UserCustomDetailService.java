@@ -29,6 +29,7 @@ public class UserCustomDetailService implements UserDetailsService {
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .authorities(
+                        // admin,user,... -> [WBH_USER,WBH_ADMIN)
 //                        List.of(new SimpleGrantedAuthority("WBH_USER"))
                         // a,b,c,d => split(",") -> [a,b,c,d]
                         // a/b/c/d => split("/") -> [a,b,c,d]

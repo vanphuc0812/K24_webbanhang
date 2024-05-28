@@ -17,6 +17,7 @@ public class OrderProduct {
     @Id
     @GeneratedValue
     private UUID id;
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Order order;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

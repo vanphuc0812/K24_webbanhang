@@ -1,6 +1,7 @@
 package com.example.demoDatabase.user.service;
 
 import com.example.demoDatabase.common.exception.WBHBussinessExeption;
+import com.example.demoDatabase.common.util.FileUtils;
 import com.example.demoDatabase.common.util.WBHMapper;
 import com.example.demoDatabase.security.jwt.JwtUtils;
 import com.example.demoDatabase.user.dto.UserDTO;
@@ -11,6 +12,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -33,6 +35,15 @@ public class UserServiceImpl implements UserService {
     public UserDTO save(UserDTOForSave userDto) {
         User user = mapper.map(userDto, User.class);
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        return mapper.map(userRepository.save(user), UserDTO.class);
+    }
+
+    @Override
+    public UserDTO changeAvatar(String username, MultipartFile avatar) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new WBHBussinessExeption("User not found"));
+        FileUtils.deleteFile(user.getAvatar());
+        user.setAvatar(FileUtils.saveFile(avatar));
         return mapper.map(userRepository.save(user), UserDTO.class);
     }
 
